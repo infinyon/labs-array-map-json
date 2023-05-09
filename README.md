@@ -7,7 +7,7 @@ SmartModule that transforms a JSON aggregate containing arrays into individual J
 Array in JSON representation:
 
 ```json
-[{"one": "1}, {"two": 2}]
+[{"one": 1}, {"two": 2}]
 ```
 
 ### Expected Ouptput
