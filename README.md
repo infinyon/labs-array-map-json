@@ -50,3 +50,6 @@ cargo build
 ```
 cargo test
 ```
+
+
+[array-map]: https://www.fluvio.io/smartmodules/transform/array-map/
