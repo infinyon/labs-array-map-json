@@ -52,4 +52,4 @@ cargo test
 ```
 
 
-[array-map]: https://www.fluvio.io/smartmodules/transform/array-map/
+[array_map]: https://www.fluvio.io/smartmodules/transform/array-map/
