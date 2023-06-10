@@ -33,10 +33,10 @@ Test small file:
 smdk test --file ./test-data/simple.json --raw
 ```
 
-Test larger file and return formatted json (requires `tail` and `jq`):
+Test larger file and return formatted json (requires `jq`):
 
 ```
-smdk test --file ./test-data/input.json --raw | tail -n +3 | jq
+smdk test --file ./test-data/input.json --raw | jq
 ```
 
 ## Cargo Compatible
