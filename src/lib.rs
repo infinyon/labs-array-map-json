@@ -1,7 +1,7 @@
-use fluvio_smartmodule::{smartmodule, Result, Record, RecordData};
+use fluvio_smartmodule::{smartmodule, Result, SmartModuleRecord, RecordData};
 
 /// Expend a JSON aggregate Record containing arrays into a list of individual JSON Records.
-fn json_array_to_records(record: &Record) -> Result<Vec<(Option<RecordData>, RecordData)>> {
+fn json_array_to_records(record: &SmartModuleRecord) -> Result<Vec<(Option<RecordData>, RecordData)>> {
     let array = serde_json::from_slice::<Vec<serde_json::Value>>(record.value.as_ref())?;
 
     // Convert each JSON value from the array back into a JSON string
@@ -20,7 +20,7 @@ fn json_array_to_records(record: &Record) -> Result<Vec<(Option<RecordData>, Rec
 }
 
 #[smartmodule(array_map)]
-pub fn array_map(record: &Record) -> Result<Vec<(Option<RecordData>, RecordData)>> {
+pub fn array_map(record: &SmartModuleRecord) -> Result<Vec<(Option<RecordData>, RecordData)>> {
     let result = json_array_to_records(record)?;
     Ok(result)
 }
@@ -28,6 +28,7 @@ pub fn array_map(record: &Record) -> Result<Vec<(Option<RecordData>, RecordData)
 #[cfg(test)]
 mod tests {
     use super::*;
+    use fluvio_smartmodule::Record;
 
     fn remove_whitespace(s: &str) -> String {
         s.chars().filter(|c| !c.is_whitespace()).collect()
@@ -43,8 +44,11 @@ mod tests {
             (None, {"one":1}), 
             (None, {"two":2})
         ]"#;
+        let record = SmartModuleRecord::new(
+            Record::new(input), 0, 0
+        );
 
-        let result = array_map(&Record::new(input)).unwrap();
+        let result = array_map(&record).unwrap();
         let output = format!("{:?}", result);
 
         assert_eq!(result.len(), 2);
@@ -55,8 +59,11 @@ mod tests {
     fn empty_array_test() {
         let input = "[]";
         let expected = "[]";
+        let record = SmartModuleRecord::new(
+            Record::new(input), 0, 0
+        );
 
-        let result = array_map(&Record::new(input)).unwrap();
+        let result = array_map(&record).unwrap();
         let output = format!("{:?}", result);
 
         assert_eq!(result.len(), 0);
