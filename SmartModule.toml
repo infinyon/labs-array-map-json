@@ -1,8 +1,8 @@
 [package]
 name = "array-map-json"
 group = "infinyon-labs"
-version = "0.1.0"
-apiVersion = "0.2.0"
+version = "0.1.1"
+apiVersion = "0.1.0"
 description = "Flatten JSON array aggregates into JSON records"
 license = "Apache-2.0"
 visibility = "public"
